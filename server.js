@@ -1,17 +1,18 @@
-const mysql = require('mysql');
+const mysql = require("mysql");
+const connectionVars = require("./connection.json");
 
 const connection = mysql.createConnection({
-  host: 'localhost',
+  host: connectionVars.host,
 
   // Your port; if not 3306
   port: 3306,
 
   // Your username
-  user: 'root',
+  user: connectionVars.user,
 
   // Be sure to update with your own MySQL password!
-  password: '',
-  database: 'ice_creamDB',
+  password: connectionVars.password,
+  database: connectionVars.database,
 });
 
 connection.connect((err) => {
