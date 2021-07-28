@@ -4,8 +4,6 @@ const inquirer = require('inquirer');
 const init = async () => {
   await connectionClient.connect();
 
-  // connectionClient.createIceCream();
-
   inquirer
     .prompt({
       name: "whatOperation",
