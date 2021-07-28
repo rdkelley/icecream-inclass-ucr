@@ -1,21 +1,28 @@
-const mysql = require("mysql");
-const connectionVars = require("./connection.json");
+const connectionClient = require("./db/dbclient");
+const inquirer = require('inquirer');
 
-const connection = mysql.createConnection({
-  host: connectionVars.host,
+const init = async () => {
+  await connectionClient.connect();
 
-  // Your port; if not 3306
-  port: 3306,
+  // connectionClient.createIceCream();
 
-  // Your username
-  user: connectionVars.user,
+  inquirer
+    .prompt({
+      name: "whatOperation",
+      type: "list",
+      message: "Do you want to add or get ice creams?",
+      choices: ["ADD", "GET"],
+    })
+    .then((answer) => {
+      // based on their answer, either call the bid or the post functions
+      if (answer.whatOperation === "ADD") {
+        connectionClient.createIceCream();
+      } else if (answer.whatOperation === "GET") {
+        // TODO Create get operation
+      } else {
+        connection.end();
+      }
+    });
+};
 
-  // Be sure to update with your own MySQL password!
-  password: connectionVars.password,
-  database: connectionVars.database,
-});
-
-connection.connect((err) => {
-  if (err) throw err;
-  console.log(`connected as id ${connection.threadId}`);
-});
+init();
